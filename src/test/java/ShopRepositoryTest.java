@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -11,25 +12,28 @@ public class ShopRepositoryTest {
     Product third = new Tshirt(3, "befree", 1500, "grey", "l");
     Product fourth = new Tshirt(4, "sela", 3000, "red", "xl");
 
-//    @BeforeEach
-//    public void setUp() {
-//        repository.save(first);
-//        repository.save(second);
-//        repository.save(third);
-//        repository.save(fourth);
-//    }
-
     @Test
     void shouldRemoveById() {
+        repository.add(first);
+        repository.add(second);
+        repository.add(third);
+        repository.add(fourth);
+
         int idToRemove = 2;
         repository.remove(idToRemove);
+
         Product[] actual = repository.findAll();
         Product[] expected = new Product[]{ first, third, fourth };
-        assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
     void shouldShowIfIdNotExist () {
-        assertThrows(NotFoundException.class, ()-> repository.remove(5));
+        repository.add(first);
+        repository.add(second);
+        repository.add(third);
+        repository.add(fourth);
+
+        Assertions.assertThrows(NotFoundException.class, ()-> repository.remove(5));
     }
 }
