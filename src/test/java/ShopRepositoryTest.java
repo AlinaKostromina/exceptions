@@ -34,6 +34,8 @@ public class ShopRepositoryTest {
         repository.add(third);
         repository.add(fourth);
 
-        Assertions.assertThrows(NotFoundException.class, ()-> repository.remove(5));
+        Assertions.assertThrows(NotFoundException.class, ()-> {
+            repository.exceptionById(5);
+        });
     }
 }

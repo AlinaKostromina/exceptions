@@ -51,4 +51,15 @@ public class ShopRepository {
         }
         products = tmp;
     }
+
+    // метод для NotFoundException при несуществующем id
+    public void exceptionById(int id) {
+        for (Product product : products) {
+            if (product.getId() != id) {
+                throw new NotFoundException(
+                        "Element with id: " + id + " not found"
+                );
+            }
+        }
+    }
 }
