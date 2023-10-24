@@ -12,8 +12,9 @@ public class ShopRepositoryTest {
     Product third = new Tshirt(3, "befree", 1500, "grey", "l");
     Product fourth = new Tshirt(4, "sela", 3000, "red", "xl");
 
+    // проверка успешности удаления существующего элемента
     @Test
-    void shouldRemoveById() {
+    void shouldRemoveById() throws Exception {
         repository.add(first);
         repository.add(second);
         repository.add(third);
@@ -27,15 +28,16 @@ public class ShopRepositoryTest {
         Assertions.assertArrayEquals(expected, actual);
     }
 
+    // генерация NotFoundException при попытке удаления несуществующего элемента
     @Test
-    void shouldShowIfIdNotExist () {
+    void shouldShowIfIdNotExist() throws Exception {
         repository.add(first);
         repository.add(second);
         repository.add(third);
         repository.add(fourth);
 
         Assertions.assertThrows(NotFoundException.class, ()-> {
-            repository.exceptionById(5);
+            repository.remove(10);
         });
     }
 }

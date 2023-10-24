@@ -40,7 +40,14 @@ public class ShopRepository {
     }
 
     // Этот способ мы рассматривали в теории в теме про композицию
-    public void remove(int id) {
+    public void remove(int id) throws Exception {
+        Product idExists = findById(id);
+        if (idExists == null) {
+            throw new NotFoundException(
+                    "Element with id: " + id + " not found"
+            );
+        }
+
         Product[] tmp = new Product[products.length - 1];
         int copyToIndex = 0;
         for (Product product : products) {
@@ -50,16 +57,5 @@ public class ShopRepository {
             }
         }
         products = tmp;
-    }
-
-    // метод для NotFoundException при несуществующем id
-    public void exceptionById(int id) {
-        for (Product product : products) {
-            if (product.getId() != id) {
-                throw new NotFoundException(
-                        "Element with id: " + id + " not found"
-                );
-            }
-        }
     }
 }
